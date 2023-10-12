@@ -1,0 +1,34 @@
+#version=3.5
+services:
+  black-wind-server:
+    image: vecktor21/black-wind-server
+    ports:
+      - "5000:5000"
+    container_name: black-wind-server
+    networks:
+      - black-wind-network
+    restart: unless-stopped
+
+  black-wind-client:
+    image: vecktor21/black-wind-client
+    ports:
+      - "3000:3000"
+    container_name: black-wind-client
+    networks:
+      - black-wind-network
+    restart: unless-stopped
+
+  black-wind-db:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    networks:
+      - black-wind-network
+
+
+
+networks:
+  black-wind-network:
+    driver: bridge
